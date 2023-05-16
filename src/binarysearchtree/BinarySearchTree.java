@@ -197,4 +197,19 @@ public class BinarySearchTree<T extends Comparable<T>> {
         return depth;
     }
 
+    public void remove(Node<T> nodo) {
+
+        if (isEmpty()) {
+            System.out.println("No se puede eliminar, árbol vacio");
+        } else if (isLeaf(nodo)) {
+
+        } else if (nodo.getRight() != null && nodo.getLeft() == null) {
+
+        } else if (nodo.getRight() == null && nodo.getLeft() != null) {
+
+        } else {
+
+        }
+    }
+
 }
