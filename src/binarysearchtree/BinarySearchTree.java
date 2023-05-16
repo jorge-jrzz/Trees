@@ -187,4 +187,14 @@ public class BinarySearchTree<T extends Comparable<T>> {
         return heigth;
     }
 
+    public int depth(Node<T> nodo) {
+        int depth = 0;
+
+        if (nodo != getRoot()) {
+            depth = 1 + depth(nodo.getParent());
+        }
+
+        return depth;
+    }
+
 }
