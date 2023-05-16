@@ -212,4 +212,22 @@ public class BinarySearchTree<T extends Comparable<T>> {
         }
     }
 
+    private void removeLeaf(Node<T> nodo) {
+        if (isRoot(nodo)) {
+            root = null;
+        } else {
+            Node<T> parent = nodo.getParent();
+
+            if (parent.getLeft() == null) {
+                parent.setLeft(null);
+            }
+
+            if (parent.getRight() == null) {
+                parent.setRight(null);
+            }
+
+            nodo = null;
+        }
+    }
+
 }
