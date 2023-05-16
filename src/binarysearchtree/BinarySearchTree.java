@@ -3,6 +3,9 @@ package binarysearchtree;
 public class BinarySearchTree<T extends Comparable<T>> {
 
     private Node<T> root;
+    private final int ONE_NODE_LEFT = 1;
+    private final int ONE_NODE_RIGTH = 2;
+    private final int TWO_NODES = 3;
 
     public boolean isEmpty() {
         return root == null;
@@ -200,8 +203,12 @@ public class BinarySearchTree<T extends Comparable<T>> {
     public void remove(Node<T> nodo) {
 
         if (isEmpty()) {
+
             System.out.println("No se puede eliminar, árbol vacio");
+
         } else if (isLeaf(nodo)) {
+
+            removeLeaf(nodo);
 
         } else if (nodo.getRight() != null && nodo.getLeft() == null) {
 
@@ -228,6 +235,15 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
             nodo = null;
         }
+    }
+
+    private Node<T> minSubTree(Node<T> nodo) {
+        if (nodo != null && nodo.getLeft() != null) {
+            while (!isLeaf(nodo)) {
+                nodo = minSubTree(nodo.getLeft());
+            }
+        }
+        return nodo;
     }
 
 }
