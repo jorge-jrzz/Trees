@@ -168,4 +168,23 @@ public class BinarySearchTree<T extends Comparable<T>> {
         System.out.println(nodo.getElement().toString());
     }
 
+    public int heigth(Node<T> nodo) {
+        int heigth = 0;
+
+        if (isInternal(nodo)) {
+
+            if (nodo.getLeft() != null) {
+                heigth = Math.max(heigth, heigth(nodo.getLeft()));
+            }
+
+            if (nodo.getRight() != null) {
+                heigth = Math.max(heigth, heigth(nodo.getRight()));
+            }
+
+            heigth++;
+        }
+
+        return heigth;
+    }
+
 }
