@@ -2,6 +2,7 @@ package binarysearchtree;
 
 public class Implementacion {
     public static void main(String[] args) {
+
         BinarySearchTree<Integer> tree = new BinarySearchTree<>();
 
         tree.add_iterativo(8);
@@ -16,11 +17,15 @@ public class Implementacion {
         // tree.preorden(tree.getRoot());
         // System.out.println("----In Orden----");
         // tree.inorden(tree.getRoot());
-        // System.out.println("----Pos Orden----");
-        // tree.posorden(tree.getRoot());
+        System.out.println("----Pos Orden----");
+        tree.posorden(tree.getRoot());
 
-        System.out.println(tree.heigth(tree.getRoot()));
-        System.out.println(tree.depth(t));
+        // System.out.println(tree.heigth(tree.getRoot()));
+        // System.out.println(tree.depth(t));
+
+        tree.remove(t);
+        System.out.println("----Pos Orden----");
+        tree.posorden(tree.getRoot());
 
     }
 

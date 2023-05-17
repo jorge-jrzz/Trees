@@ -231,11 +231,11 @@ public class BinarySearchTree<T extends Comparable<T>> {
         } else {
             Node<T> parent = nodo.getParent();
 
-            if (parent.getLeft() == null) {
+            if (parent.getLeft() == nodo) {
                 parent.setLeft(null);
             }
 
-            if (parent.getRight() == null) {
+            if (parent.getRight() == nodo) {
                 parent.setRight(null);
             }
 
@@ -249,23 +249,26 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
         switch (typeNode) {
             case ONE_NODE_LEFT:
-                siguiente = nodo.getLeft();
+                siguiente = nodo.getLeft(); // Asigna el hijo izquierdo como siguiente nodo a enlazar
                 break;
 
             case ONE_NODE_RIGTH:
-                siguiente = minSubTree(nodo.getRight());
+                siguiente = minSubTree(nodo.getRight()); // Busca el nodo más pequeño en el subárbol derecho y lo asigna
+                                                         // como siguiente nodo a enlazar
                 break;
 
             case TWO_NODES:
-                siguiente = minSubTree(nodo.getRight());
-                if (!isRoot(siguiente.getParent())) {
-                    nodo.getLeft().setParent(siguiente);
-                    nodo.getRight().setParent(siguiente);
+                siguiente = minSubTree(nodo.getRight()); // Busca el nodo más pequeño en el subárbol derecho y lo asigna
+                                                         // como siguiente nodo a enlazar
+                if (!isRoot(siguiente.getParent())) { // Si el padre de siguiente no es la raíz
+                    nodo.getLeft().setParent(siguiente); // Establece siguiente como el padre del hijo izquierdo de nodo
+                    nodo.getRight().setParent(siguiente); // Establece siguiente como el padre del hijo derecho de nodo
 
-                    if (siguiente.getParent().getLeft() == siguiente) {
-                        siguiente.getParent().setLeft(null);
-                    } else if (siguiente.getParent().getRight() == siguiente) {
-                        siguiente.getParent().setRight(null);
+                    if (siguiente.getParent().getLeft() == siguiente) { // Si siguiente es el hijo izquierdo del padre
+                        siguiente.getParent().setLeft(null); // Establece el hijo izquierdo del padre como null
+                    } else if (siguiente.getParent().getRight() == siguiente) { // Si siguiente es el hijo derecho del
+                                                                                // padre
+                        siguiente.getParent().setRight(null); // Establece el hijo derecho del padre como null
                     }
                 }
                 break;
@@ -274,27 +277,30 @@ public class BinarySearchTree<T extends Comparable<T>> {
                 break;
         }
 
-        siguiente.setParent(nodo.getParent());
+        siguiente.setParent(nodo.getParent()); // Establece el padre de siguiente como el padre de nodo
 
-        if (!isRoot(nodo)) {
-            if (nodo.getParent().getLeft() == nodo) {
-                nodo.getParent().setLeft(siguiente);
-            } else if (nodo.getParent().getRight() == nodo) {
-                nodo.getParent().setRight(siguiente);
+        if (!isRoot(nodo)) { // Si nodo no es la raíz
+            if (nodo.getParent().getLeft() == nodo) { // Si nodo es el hijo izquierdo de su padre
+                nodo.getParent().setLeft(siguiente); // Establece siguiente como el nuevo hijo izquierdo del padre
+            } else if (nodo.getParent().getRight() == nodo) { // Si nodo es el hijo derecho de su padre
+                nodo.getParent().setRight(siguiente); // Establece siguiente como el nuevo hijo derecho del padre
             }
         } else {
-            root = siguiente;
+            root = siguiente; // Si nodo es la raíz, establece siguiente como la nueva raíz del árbol
         }
 
-        if (nodo.getRight() != null && nodo.getRight() != siguiente) {
-            siguiente.setRight(nodo.getRight());
+        if (nodo.getRight() != null && nodo.getRight() != siguiente) { // Si nodo tiene un hijo derecho distinto de
+                                                                       // siguiente
+            siguiente.setRight(nodo.getRight()); // Establece el hijo derecho de nodo como el hijo derecho de siguiente
         }
 
-        if (nodo.getLeft() != null && nodo.getLeft() != siguiente) {
-            siguiente.setLeft(nodo.getLeft());
+        if (nodo.getLeft() != null && nodo.getLeft() != siguiente) { // Si nodo tiene un hijo izquierdo distinto de
+                                                                     // siguiente
+            siguiente.setLeft(nodo.getLeft()); // Establece el hijo izquierdo de nodo como el hijo izquierdo de
+                                               // siguiente
         }
 
-        nodo = null;
+        nodo = null; // Se elimina la referencia al nodo original
 
     }
 
