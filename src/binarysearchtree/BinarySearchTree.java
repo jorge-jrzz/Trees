@@ -212,9 +212,15 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
         } else if (nodo.getRight() != null && nodo.getLeft() == null) {
 
+            removeWhitChild(nodo, ONE_NODE_RIGTH);
+
         } else if (nodo.getRight() == null && nodo.getLeft() != null) {
 
+            removeWhitChild(nodo, ONE_NODE_LEFT);
+
         } else {
+
+            removeWhitChild(nodo, TWO_NODES);
 
         }
     }
@@ -235,6 +241,61 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
             nodo = null;
         }
+    }
+
+    private void removeWhitChild(Node<T> nodo, int typeNode) {
+
+        Node<T> siguiente = null;
+
+        switch (typeNode) {
+            case ONE_NODE_LEFT:
+                siguiente = nodo.getLeft();
+                break;
+
+            case ONE_NODE_RIGTH:
+                siguiente = minSubTree(nodo.getRight());
+                break;
+
+            case TWO_NODES:
+                siguiente = minSubTree(nodo.getRight());
+                if (!isRoot(siguiente.getParent())) {
+                    nodo.getLeft().setParent(siguiente);
+                    nodo.getRight().setParent(siguiente);
+
+                    if (siguiente.getParent().getLeft() == siguiente) {
+                        siguiente.getParent().setLeft(null);
+                    } else if (siguiente.getParent().getRight() == siguiente) {
+                        siguiente.getParent().setRight(null);
+                    }
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        siguiente.setParent(nodo.getParent());
+
+        if (!isRoot(nodo)) {
+            if (nodo.getParent().getLeft() == nodo) {
+                nodo.getParent().setLeft(siguiente);
+            } else if (nodo.getParent().getRight() == nodo) {
+                nodo.getParent().setRight(siguiente);
+            }
+        } else {
+            root = siguiente;
+        }
+
+        if (nodo.getRight() != null && nodo.getRight() != siguiente) {
+            siguiente.setRight(nodo.getRight());
+        }
+
+        if (nodo.getLeft() != null && nodo.getLeft() != siguiente) {
+            siguiente.setLeft(nodo.getLeft());
+        }
+
+        nodo = null;
+
     }
 
     private Node<T> minSubTree(Node<T> nodo) {
